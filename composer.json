@@ -1,0 +1,28 @@
+{
+  "name": "burdock/php-utils",
+  "type": "library",
+  "description": "Burdock PHP Utilities",
+  "repositories": [
+  ],
+  "authors": [
+      {
+          "name": "Hiraku Saito",
+          "email": "ittun55@gmail.com"
+      }
+  ],
+  "autoload": {
+      "psr-4": {
+          "Burdock\\Utils\\": "src/Utils"
+      }
+  },
+  "minimum-stability": "dev",
+  "require": {
+    "kunalvarma05/dropbox-php-sdk": "^0.2.1",
+    "vlucas/phpdotenv": "^3.3",
+    "psr/log": "^1.1"
+  },
+  "require-dev": {
+      "phpunit/phpunit": "^8.0",
+      "monolog/monolog": "^1.24"
+  }
+}
