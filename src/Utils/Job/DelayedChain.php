@@ -13,12 +13,8 @@ class DelayedChain
     private $_errors = null;
     private $_logger = null;
  
-    public function __construct($value, ?LoggerInterface $logger=null, array $errors=[])
+    public function __construct($value=null, ?LoggerInterface $logger=null, array $errors=[])
     {
-        if (is_null($value)) {
-            throw new \InvalidArgumentException('The $value can not be null');
-        }
-
         $this->_value = $value;
 
         if (is_null($logger)) {

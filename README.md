@@ -1,6 +1,6 @@
 # Burdock PHP Utilities
 
-## Includs 
+## Includes 
 
  * Job Chaining Utility
  * String Utility
@@ -67,6 +67,5 @@ Utilities for String.
 
 Thin wrapper for kunalvarma05/dropbox-php-sdk
 
-## JobChain
 
 
