@@ -30,7 +30,7 @@ class Chain
         $this->_logger->info($func->getName());
 
         if ($this->_value instanceof Failed) {
-            $this->_logger->warn(static::PROCESS_SKIPPED_MSG);
+            $this->_logger->warning(static::PROCESS_SKIPPED_MSG);
             return $this;
         }
 
@@ -38,7 +38,7 @@ class Chain
             $this->_logger->debug('  Wrapped value: ' . var_export($this->_value, true));
             return new Chain($func->do($this->_value, ...$args), $this->_logger, $this->_errors);
         } catch(\Exception $e) {
-            $this->_logger->warn(static::PROCESS_FAILED_MSG);
+            $this->_logger->warning(static::PROCESS_FAILED_MSG);
             $this->_logger->debug('  Wrapped value: ' . var_export($this->_value, true));
             return new Chain(new Failed(), $this->_logger, array_merge($this->_errors, [$e]));
         }
