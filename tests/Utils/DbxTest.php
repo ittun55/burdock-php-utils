@@ -38,14 +38,14 @@ class DbxTest extends TestCase
     {
         $now = date('YmdHis');
         $pathToLocalFile = __DIR__ . '/dropbox_test_local.txt';
-        $this->pathToDbxFile = 'dropbox_test_' . $now . '.txt';
+        $this->pathToDbxFile = 'test2/dropbox_test_' . $now . '.txt';
         return $this->dbx->upload($pathToLocalFile, $this->pathToDbxFile);
     }
 
     public function test_fileUpload_and_checkFileExists()
     {
         $uploaded = $this->uploadFile();
-        $this->assertEquals($this->pathToDbxFile, $uploaded->getName());
+        $this->assertEquals($this->dbx->getBaseDir() . '/' . $this->pathToDbxFile, $uploaded->getPathDisplay());
     }
 
     /**
@@ -70,7 +70,7 @@ class DbxTest extends TestCase
         $uploaded = $this->uploadFile();
         $uploaded = $this->uploadFile();
         $uploaded = $this->uploadFile();
-        $deleted = $this->dbx->rotate(2, null, true);
+        $deleted = $this->dbx->rotate(2, 'test2/', true);
         $this->assertEquals(3, count($deleted));
         $files = $this->dbx->listFolder();
         foreach($files as $file) {

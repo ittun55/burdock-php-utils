@@ -19,6 +19,11 @@ class Dbx
         $this->base_dir = $base_dir;
     }
 
+    public function getBaseDir()
+    {
+        return $this->base_dir;
+    }
+
     public function getDbxFullPath($dbx_path)
     {
         $_path = $this->base_dir;
@@ -67,6 +72,7 @@ class Dbx
     public function rotate($num_left, $dbx_path=null, $dry_run=false)
     {
         $items = $this->listFolder($dbx_path);
+        var_dump($items);
         array_multisort($items, SORT_DESC);
         $to_be_deleted = [];
         for ($i = 0; $i < count($items); $i++) {

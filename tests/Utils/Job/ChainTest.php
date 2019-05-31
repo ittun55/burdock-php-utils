@@ -13,7 +13,7 @@ class ChainTest extends TestCase
     public function setUp(): void
     {
         $this->logger = new Logger('ChainTest');
-        $this->logger->pushHandler(new StreamHandler('php://stdout'));
+        $this->logger->pushHandler(new StreamHandler('php://stdout'), Logger::ERROR);
     }
 
     public function test_ラップされた値を取得する()
