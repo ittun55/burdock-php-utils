@@ -1,6 +1,8 @@
 <?php
 use PHPUnit\Framework\TestCase;
 use Burdock\Utils\Dbx;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class DbxTest extends TestCase
 {
@@ -10,16 +12,22 @@ class DbxTest extends TestCase
     private $base_dir;
     private $dbx;
     private $pathToDbxFile;
+    private $logger;
 
     public function setUp():void
     {
+        $this->logger = new Logger('DbxTest');
+        $handler = new StreamHandler('php://stdout', Logger::INFO);
+        $this->logger->pushHandler($handler);
         $dotenv = Dotenv\Dotenv::create(__DIR__. '/../');
         $dotenv->load();
         $this->app_key = getenv('DBX_APP_KEY');
         $this->secret_key = getenv('DBX_APP_SECRET');
         $this->access_token = getenv('DBX_ACCESS_TOKEN');
         $this->base_dir = getenv('DBX_BASE_DIR');
-        $this->dbx = new Dbx($this->app_key, $this->secret_key, $this->access_token, $this->base_dir);
+        $this->dbx = new Dbx(
+            $this->app_key, $this->secret_key, 
+            $this->access_token, $this->base_dir, $this->logger);
     }
 
     public function test_constructor()
@@ -72,9 +80,9 @@ class DbxTest extends TestCase
         $uploaded = $this->uploadFile();
         $deleted = $this->dbx->rotate(2, 'test2/', true);
         $this->assertEquals(3, count($deleted));
-        $files = $this->dbx->listFolder();
-        foreach($files as $file) {
-            $this->dbx->delete($file);
-        }
+        //$files = $this->dbx->listFolder('test2/');
+        //foreach($files as $file) {
+        //    $this->dbx->delete($file);
+        //}
     }
 }
