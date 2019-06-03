@@ -44,6 +44,7 @@ class DbxTest extends TestCase
 
     public function uploadFile()
     {
+        sleep(1);
         $now = date('YmdHis');
         $pathToLocalFile = __DIR__ . '/dropbox_test_local.txt';
         $this->pathToDbxFile = 'test2/dropbox_test_' . $now . '.txt';
@@ -71,18 +72,29 @@ class DbxTest extends TestCase
      * @test
      * @depends test_delete_uploadedFile
      */    
-    public function test_rotate_uploadedFile()
+    public function test_rotateByCount()
     {
         $uploaded = $this->uploadFile();
         $uploaded = $this->uploadFile();
         $uploaded = $this->uploadFile();
         $uploaded = $this->uploadFile();
         $uploaded = $this->uploadFile();
-        $deleted = $this->dbx->rotate(2, 'test2/', true);
+        $deleted = $this->dbx->rotateByCount(2, 'test2/', true);
         $this->assertEquals(3, count($deleted));
-        //$files = $this->dbx->listFolder('test2/');
-        //foreach($files as $file) {
-        //    $this->dbx->delete($file);
-        //}
+    }
+
+    /**
+     * @test
+     * @depends test_delete_uploadedFile
+     */    
+    public function test_rotateByDate()
+    {
+        $uploaded = $this->uploadFile();
+        $uploaded = $this->uploadFile();
+        $uploaded = $this->uploadFile();
+        $uploaded = $this->uploadFile();
+        $uploaded = $this->uploadFile();
+        $deleted = $this->dbx->rotateByDate(2, 'test2/', true);
+        $this->assertEquals(0, count($deleted));
     }
 }

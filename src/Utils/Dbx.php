@@ -6,6 +6,7 @@ use Kunnu\Dropbox\DropboxApp;
 use Kunnu\Dropbox\DropboxFile;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Carbon\Carbon;
 
 class Dbx
 {
@@ -66,15 +67,22 @@ class Dbx
         return $this->dropbox->delete($path);
     }
 
-    public function listFolder($dbx_path=null)
+    public function listFolder($dbx_path=null, $sort_by=null)
     {
         $_base_dir = $this->getDbxFullPath($dbx_path);
         $listFolderContents = $this->dropbox->listFolder($_base_dir);
-        $items = [];
+        $item = [];
         foreach ($listFolderContents->getItems() as $content) {
-            $items[] = $content->getPathDisplay();
+                $item[]     = $content;
+                $path[]     = $content->getPathDisplay();
+                $modified[] = $content->getServerModified();
         }
-        return $items;
+        if ($sort_by='server_modified') {
+            array_multisort($modified, SORT_ASC, $item);
+        } else {
+            array_multisort($path, SORT_ASC, $item);
+        }
+        return $item;
         /* Below doesn't work because $listFolderContents->getItems() never returns array...
         return array_map(function($content) {
             return $content->getName();
@@ -82,15 +90,36 @@ class Dbx
         */
     }
 
-    public function rotate($num_left, $dbx_path=null, $dry_run=false)
+    public function rotateByCount($num_left, $dbx_path=null, $dry_run=false)
     {
         $items = $this->listFolder($dbx_path);
         array_multisort($items, SORT_DESC);
         $deleted = [];
         for ($i = 0; $i < count($items); $i++) {
-            $path = $items[$i];
+            $content = $items[$i];
+            $path = $content->getPathDisplay();
             $this->logger->info('checking rotation for: ' . $path);
             if ($i < $num_left) continue;
+            $this->logger->info('start deletion for: ' . $path);
+            $this->dropbox->delete($path);
+            $deleted[] = $path;
+        }
+        return $deleted;
+    }
+
+    public function rotateByDate($num_left, $dbx_path=null, $dry_run=false)
+    {
+        $now_dt  = Carbon::now();
+        $sort_by = 'server_modified';
+        $items   = $this->listFolder($dbx_path, $sort_by);
+        array_multisort($items, SORT_DESC);
+        $deleted = [];
+        for ($i = 0; $i < count($items); $i++) {
+            $content = $items[$i];
+            $path = $content->getPathDisplay();
+            $this->logger->info('checking rotation for: ' . $path);
+            $mod_dt = new Carbon($content->getServerModified());
+            if ($mod_dt->diffInDays($now_dt) <= $num_left) continue;
             $this->logger->info('start deletion for: ' . $path);
             $this->dropbox->delete($path);
             $deleted[] = $path;
