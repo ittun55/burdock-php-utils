@@ -115,6 +115,8 @@ class Dbx
         array_multisort($items, SORT_DESC);
         $deleted = [];
         for ($i = 0; $i < count($items); $i++) {
+            // 過去のバックアップをすべて消してしまわないための予防措置
+            if (count($items) - count($deleted) <= $num_left) continue;
             $content = $items[$i];
             $path = $content->getPathDisplay();
             $this->logger->info('checking rotation for: ' . $path);

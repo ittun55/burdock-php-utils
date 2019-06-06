@@ -15,13 +15,7 @@ class Chain
     public function __construct($value=null, ?LoggerInterface $logger=null, array $errors=[])
     {
         $this->_value = $value;
-
-        if (is_null($logger)) {
-            $this->_logger = new NullLogger();
-        } else {
-            $this->_logger = $logger;
-        }
-
+        $this->_logger = (is_null($logger)) ? new NullLogger() : $logger;
         $this->_errors = $errors;
     }
  
