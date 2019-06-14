@@ -6,9 +6,9 @@ class StrTest extends TestCase
 {
     public function test_passwordLength()
     {
-        $generated = Str::randomPassword(3);
+        $generated = Str::randomChars(3);
         $this->assertEquals(3, mb_strlen($generated));
-        $generated = Str::randomPassword(5);
+        $generated = Str::randomChars(5);
         $this->assertEquals(5, mb_strlen($generated));
     }
 
@@ -20,7 +20,7 @@ class StrTest extends TestCase
             range('A', 'Z'),
             ['!','@','$','&','#','-','_','+']
         );
-        $generated = Str::randomPassword(3, $excludes);
+        $generated = Str::randomChars(3, $excludes);
         $this->assertEquals('000', $generated);
 
         $excludes = array_merge(
@@ -29,7 +29,7 @@ class StrTest extends TestCase
             range('A', 'Z'),
             ['!','@','$','&','#','-','_','+']
         );
-        $generated = Str::randomPassword(3, $excludes);
+        $generated = Str::randomChars(3, $excludes);
         $this->assertEquals('aaa', $generated);
     }
 }

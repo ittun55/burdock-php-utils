@@ -1,4 +1,5 @@
 <?php
+namespace Burdock\Utils;
 
 class Dt
 {
@@ -37,13 +38,13 @@ class Dt
         }
         switch ($wayear) {
             case 0:
-                $wadate = $year."年".$month."月".$day."日";
+                $wadate = $year."年".ltrim($month, '0')."月".ltrim($day, '0')."日";
                 break;
             case 1:
-                $wadate = $gengo."元年".$month."月".$day."日";
+                $wadate = $gengo."元年".ltrim($month, '0')."月".ltrim($day, '0')."日";
                 break;
             default:
-                $wadate = $gengo.sprintf("%02d", $wayear)."年".$month."月".$day."日";
+                $wadate = $gengo.sprintf("%02d", $wayear)."年".ltrim($month, '0')."月".ltrim($day, '0')."日";
         }
         if ($week) {
             $w = date('w', strtotime($src));
