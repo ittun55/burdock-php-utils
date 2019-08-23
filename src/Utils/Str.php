@@ -6,7 +6,7 @@ use Burdock\Utils\Job\NamedJob;
 
 class Str
 {
-    public static function randomChars($length, array $excludes=[])
+    public static function randomChars(int $length, array $excludes=[]): string
     {
         $generatePopulationChars = new NamedJob('generatePopulationChars', function($value) {
             return array_merge(

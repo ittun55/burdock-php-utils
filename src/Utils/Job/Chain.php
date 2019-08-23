@@ -45,12 +45,12 @@ class Chain
         return $this->_value;
     }
  
-    public function getResult()
+    public function getResult(): int
     {
         return (count($this->_errors) == 0) ? 0 : 1;
     }
  
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->_errors;
     }

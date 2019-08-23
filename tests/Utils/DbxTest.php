@@ -14,7 +14,7 @@ class DbxTest extends TestCase
     private $pathToDbxFile;
     private $logger;
 
-    public function setUp():void
+    public function setUp(): void
     {
         $this->logger = new Logger('DbxTest');
         $handler = new StreamHandler('php://stdout', Logger::INFO);
