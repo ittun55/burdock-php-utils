@@ -12,7 +12,8 @@
   ],
   "autoload": {
       "psr-4": {
-          "Burdock\\Utils\\": "src/Utils"
+          "Burdock\\Utils\\": "src/Utils",
+          "Burdock\\StorageAdapter\\": "src/StorageAdapter"
       }
   },
   "require": {

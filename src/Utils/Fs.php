@@ -17,17 +17,20 @@ class Fs
 
     public static function rmDir(string $path): bool
     {
-        $dir = new DirectoryIterator($path);
-        if (!$dir->isDir()) { return false; }
-        foreach ($dir as $e) {
-            if ($e->isDot()) continue;
-            if ($e->isDir()) {
-                if (!self::rmDir($e->getPathName()))
-                    return false;
-            } else {
-                unlink($e->getPathName()) ;
+        if (is_dir($path)) {
+            $items = scandir($path);
+            foreach ($items as $item) {
+                if (in_array($item, ['.', '..'])) continue;
+                $target = $path . DS . $item;
+                if (is_dir($target)) {
+                    self::rmDir($target);
+                } else {
+                    unlink($target);
+                }
             }
+            return rmdir($path);
+        } else {
+            return false;
         }
-        return rmdir($path);
     }
 }
