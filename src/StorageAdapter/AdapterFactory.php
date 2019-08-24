@@ -7,9 +7,10 @@ class AdapterFactory
 {
     const DROPBOX = 'dropbox';
 
-    public static function getInstance($type): IStorageAdapter
+    public static function getInstance(string $type, DropboxConfig $config): IStorageAdapter
     {
-        if ($type == self::DROPBOX)
-            return new DropboxAdapter();
+        if ($type == self::DROPBOX) {
+            return new DropboxAdapter($config);
+        }
     }
 }

@@ -33,14 +33,14 @@ class DropboxAdapter implements IStorageAdapter
     protected $base_dir;
     protected $logger;
 
-    public function __construct($app_key, $secret, $token, $base_dir, ?LoggerInterface $logger=null)
+    public function __construct(DropboxConfig $config)
     {
-        if (!$app_key || !$secret || !$token || !$base_dir)
+        if (!$config->app_key || !$config->secret || !$config->token || !$config->base_dir)
             throw new \InvalidArgumentException('app_key, secret and token for Dropbox is required.');
-        $this->base_dir = $base_dir;
-        $app = new DropboxApp($app_key, $secret, $token);
+        $app = new DropboxApp($config->app_key, $config->secret, $config->token);
         $this->dropbox  = new Dropbox($app);
-        $this->logger   = is_null($logger) ? new NullLogger() : $logger;
+        $this->logger   = is_null($config->logger) ? new NullLogger() : $config->logger;
+        $this->base_dir = $config->base_dir;
     }
 
     public function getDbxFullPath(string $remote=null): string

@@ -1,5 +1,6 @@
 <?php
 use Burdock\StorageAdapter\DropboxAdapter;
+use Burdock\StorageAdapter\DropboxConfig;
 use Burdock\Utils\Str;
 use Burdock\Utils\Fs;
 use Monolog\Handler\StreamHandler;
@@ -15,18 +16,11 @@ class DropboxAdapterTest extends TestCase
 
     public function setUp(): void
     {
-        $this->logger = new Logger('DbxTest');
+        $config = new DropboxConfig(__DIR__. '/../');
+        $config->logger = new Logger('DbxTest');
         $handler = new StreamHandler('php://stdout', Logger::INFO);
-        $this->logger->pushHandler($handler);
-        $env = Dotenv\Dotenv::create(__DIR__. '/../');
-        $env->load();
-        $app_key = getenv('DBX_APP_KEY');
-        $secret_key = getenv('DBX_APP_SECRET');
-        $access_token = getenv('DBX_ACCESS_TOKEN');
-        $base_dir = getenv('DBX_BASE_DIR');
-        $this->adapter = new DropboxAdapter(
-            $app_key, $secret_key,
-            $access_token, $base_dir, $this->logger);
+        $config->logger->pushHandler($handler);
+        $this->adapter = new DropboxAdapter($config);
     }
 
     public function test_fileOperation()
