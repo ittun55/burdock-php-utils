@@ -32,4 +32,15 @@ class StrTest extends TestCase
         $generated = Str::randomChars(3, $excludes);
         $this->assertEquals('aaa', $generated);
     }
+
+    public function test_endsWith()
+    {
+        $sentence = 'abc_xyz';
+        $end1   = 'xyz';
+        $this->assertTrue(Str::endsWith($end1, $sentence));
+        $end2   = '.xyz';
+        $this->assertFalse(Str::endsWith($end2, $sentence));
+        $end3   = '_xyz';
+        $this->assertTrue(Str::endsWith($end3, $sentence));
+    }
 }

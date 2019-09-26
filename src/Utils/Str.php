@@ -1,37 +1,50 @@
 <?php
 namespace Burdock\Utils;
 
-use Burdock\Utils\Job\Chain;
-use Burdock\Utils\Job\NamedJob;
+use Burdock\Chainable\Chainable;
+use Closure;
 
 class Str
 {
-    public static function randomChars(int $length, array $excludes=[]): string
+    public static function populateChars(): callable
     {
-        $generatePopulationChars = new NamedJob('generatePopulationChars', function($value) {
+        return function() {
             return array_merge(
                 range('a', 'z'),
                 range('0', '9'),
                 range('A', 'Z'),
                 ['!','@','$','&','#','-','_','+']
             );
-        });
+        };
+    }
 
-        $excludeChars = new NamedJob('excludeChars', function($population, $excludes) {
+    public static function excludeChars(array $excludes): callable
+    {
+        return function ($population) use ($excludes): array {
             return array_values(array_diff($population, $excludes));
-        });
+        };
+    }
 
-        $randomChars = new NamedJob('randomChars', function($population, $length) {
+    public static function randomize(int $length=8): callable
+    {
+        return function(array $population) use ($length) {
             return array_map(function($i) use($population) {
                 return $population[rand(0, count($population) - 1)];
             }, range(0, $length-1));
-        });
+        };
+    }
 
-        $chain = (new Chain())
-          ->process($generatePopulationChars)
-          ->process($excludeChars, $excludes)
-          ->process($randomChars, $length);
-
+    public static function randomChars(int $length, array $excludes=[]): string
+    {
+        $chain = (new Chainable())
+          ->process('populate characters', Str::populateChars())
+          ->process('exclude some characters', Str::excludeChars($excludes))
+          ->process('randomize characters', Str::randomize($length));
         return implode($chain->getValue());
+    }
+
+    public static function endsWith(string $chars, string $sentence) : bool
+    {
+        return $chars === substr($sentence, -1 * strlen($chars));
     }
 }
