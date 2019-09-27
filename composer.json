@@ -18,7 +18,7 @@
   "require": {
     "psr/log": "^1.1",
     "nesbot/carbon": "^2.16.3",
-    "burdock/php-config": "^0.0.1",
+    "burdock/php-config": "^0.0.2",
     "kunalvarma05/dropbox-php-sdk": "^0.2.1",
     "burdock/php-chainable": "^0.0.2"
   },

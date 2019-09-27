@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3fe6cb78182a04ec0510c67372ac4810",
+    "content-hash": "392f82461c3c24d636b4e63fd8aab05b",
     "packages": [
         {
             "name": "burdock/php-chainable",
@@ -49,16 +49,16 @@
         },
         {
             "name": "burdock/php-config",
-            "version": "v0.0.1",
+            "version": "v0.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ittun55/burdock-php-config.git",
-                "reference": "d6ea9677e2250c0ce88ece2bd19c605b0173f00b"
+                "reference": "a2723fb324a4ced20eb01689b86a88582a3ac08a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ittun55/burdock-php-config/zipball/d6ea9677e2250c0ce88ece2bd19c605b0173f00b",
-                "reference": "d6ea9677e2250c0ce88ece2bd19c605b0173f00b",
+                "url": "https://api.github.com/repos/ittun55/burdock-php-config/zipball/a2723fb324a4ced20eb01689b86a88582a3ac08a",
+                "reference": "a2723fb324a4ced20eb01689b86a88582a3ac08a",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 }
             ],
             "description": "loading configuration from json/yaml/toml file",
-            "time": "2019-09-24T17:00:14+00:00"
+            "time": "2019-09-27T14:19:16+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
