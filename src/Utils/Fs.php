@@ -11,7 +11,7 @@ class Fs
     {
         $rand = Str::randomChars(8, ['#','$','&']);
         $dir = $base_dir . DS . $rand;
-        mkdir($dir, '0600', true);
+        mkdir($dir, 0700, true);
         return $dir;
     }
 
