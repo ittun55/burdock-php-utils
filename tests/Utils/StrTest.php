@@ -33,6 +33,17 @@ class StrTest extends TestCase
         $this->assertEquals('aaa', $generated);
     }
 
+    public function test_startsWith()
+    {
+        $sentence = 'abc_xyz';
+        $start1   = 'abc';
+        $this->assertTrue(Str::startsWith($start1, $sentence));
+        $start2   = 'abc.';
+        $this->assertFalse(Str::startsWith($start2, $sentence));
+        $start3   = 'abc_';
+        $this->assertTrue(Str::startsWith($start3, $sentence));
+    }
+
     public function test_endsWith()
     {
         $sentence = 'abc_xyz';

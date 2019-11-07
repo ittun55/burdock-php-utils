@@ -43,6 +43,11 @@ class Str
         return implode($chain->getValue());
     }
 
+    public static function startsWith(string $chars, string $sentence) : bool
+    {
+        return $chars === substr($sentence, 0,  strlen($chars));
+    }
+
     public static function endsWith(string $chars, string $sentence) : bool
     {
         return $chars === substr($sentence, -1 * strlen($chars));
