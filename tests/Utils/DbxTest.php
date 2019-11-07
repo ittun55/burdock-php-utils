@@ -7,7 +7,7 @@ use Monolog\Handler\StreamHandler;
 class DbxTest extends TestCase
 {
     private $app_key;
-    private $app_secret;
+    private $secret_key;
     private $access_token;
     private $base_dir;
     private $dbx;

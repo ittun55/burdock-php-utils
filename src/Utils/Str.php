@@ -2,7 +2,6 @@
 namespace Burdock\Utils;
 
 use Burdock\Chainable\Chainable;
-use Closure;
 
 class Str
 {

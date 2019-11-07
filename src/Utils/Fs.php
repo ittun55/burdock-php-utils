@@ -2,7 +2,6 @@
 
 namespace Burdock\Utils;
 
-use DirectoryIterator;
 const DS = DIRECTORY_SEPARATOR;
 
 class Fs
